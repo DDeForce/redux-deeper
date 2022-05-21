@@ -9,10 +9,21 @@ function App() {
   const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
-    fetch("https://redux-cart-f8db2-default-rtdb.firebaseio.com/", {
-      method: "PUT",
-      body: JSON.stringify(cart),
-    });
+    const sentCartData = async () => {
+      const responce = await fetch(
+        "https://redux-cart-f8db2-default-rtdb.firebaseio.com/",
+        {
+          method: "PUT",
+          body: JSON.stringify(cart),
+        }
+      );
+
+      if (!responce.ok) {
+        throw new Error("Sending cart data failed.");
+      }
+
+      const responceData = await responce.json();
+    };
   }, [cart]);
 
   const isCartVisible = useSelector((data) => data.ui.isCartVisible);
