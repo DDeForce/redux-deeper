@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isCartVisible: true,
-  notification: false,
+  notification: null,
 };
 
 const uiSlice = createSlice({
@@ -13,7 +13,11 @@ const uiSlice = createSlice({
       state.isCartVisible = !state.isCartVisible;
     },
     showNotification(state, action) {
-      // state.notification =
+      state.notification = {
+        status: action.payload.status,
+        title: action.payload.title,
+        message: action.payload.message,
+      };
     },
   },
 });
