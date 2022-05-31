@@ -18,6 +18,7 @@ const CartItem = (props) => {
   const removeItemFormCart = () => {
     dispatch(cartActions.removeItemToCart(id));
   };
+
   return (
     <li className={classes.item}>
       <header>
