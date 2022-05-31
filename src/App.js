@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Cart from "./components/Cart/Cart";
@@ -6,7 +6,7 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification";
 
-import { sendCartData } from "./store/cart-slice";
+import { sendCartData, fatchCartData } from "./store/cart-actions";
 
 let isInitial = true;
 
@@ -17,17 +17,23 @@ function App() {
   const isCartVisible = useSelector((data) => data.ui.isCartVisible);
 
   useEffect(() => {
+    dispatch(fatchCartData());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (isInitial) {
       isInitial = false;
       return;
     }
 
-    dispatch(sendCartData(cart));
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   useSelector((state) => state.cart);
   return (
-    <Fragment>
+    <>
       {notification ? (
         <Notification
           status={notification.status}
@@ -39,7 +45,7 @@ function App() {
         {isCartVisible ? <Cart /> : null}
         <Products />
       </Layout>
-    </Fragment>
+    </>
   );
 }
 
