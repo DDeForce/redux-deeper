@@ -1,5 +1,4 @@
 import classes from "./Card.module.css";
-import { useDispatch } from "react-redux";
 
 const Card = (props) => {
   return (
